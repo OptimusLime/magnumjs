@@ -3,6 +3,19 @@ cmake_policy(SET CMP0042 NEW)
 # project(MyApplication)
 project (magnum-js)
 
+
+# Very first thing to do. Either node_modules exists within our directory
+# or it exists two directories up and we are being built as a dependency (most likely)
+get_filename_component(_fullpath "node_modules" REALPATH)
+get_filename_component(_fullbackpath "../../node_modules" REALPATH)
+IF(EXISTS ${_fullpath})
+  set(BASE_NODE_DIR ${_fullpath})
+elseif(EXISTS ${_fullbackpath})
+  # we are a dependency for another project inside of a node_modules folder
+  set(BASE_NODE_DIR ${_fullbackpath})
+endif()
+message(STATUS "Setting Node Depends Dir: ${BASE_NODE_DIR}")
+
 set(MAGNUMJS_MAJOR_VERSION 0)
 set(MAGNUMJS_MINOR_VERSION 1)
 set(MAGNUMJS_PATCH_VERSION 0)
@@ -45,14 +58,14 @@ add_library(${PROJECT_NAME} SHARED)
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 # set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/bin)
 
-
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/node_modules/corradejs/corrade/share/cmake/Corrade)
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_SOURCE_DIR}/node_modules/corradejs/corrade)
-# set(_CORRADE_MODULE_DIR ${CMAKE_SOURCE_DIR}/node_modules/corradejs/corrade/share)
+message(STATUS "ATTEMPT FIND CORRADE: ${CMAKE_SOURCE_DIR}/node_modules/corradejs/corrade/share/cmake/Corrade")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${BASE_NODE_DIR}/corradejs/corrade/share/cmake/Corrade)
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${BASE_NODE_DIR}/corradejs/corrade)
+# set(_CORRADE_MODULE_DIR ${BASE_NODE_DIR}/corradejs/corrade/share)
 find_package(Corrade REQUIRED)
 
 message(STATUS "Corrade Incl: ${CORRADE_INCLUDE_DIR}")
-set(CORRADE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/node_modules/corradejs/corrade/include ${CORRADE_INCLUDE_DIR})
+set(CORRADE_INCLUDE_DIR ${BASE_NODE_DIR}/corradejs/corrade/include ${CORRADE_INCLUDE_DIR})
 
 # add our dependencies
 FetchContent_Declare(
