@@ -54,9 +54,35 @@ if(${CMAKE_VERSION} VERSION_LESS 3.14)
     include(cmake/add_FetchContent_MakeAvailable.cmake)
 endif()
 
+if( NOT DEFINED ${VCPKG_ROOT})
+  message(STATUS "Pulling VCPKG_ROOT from Environment to build")
+  set(VCPKG_ROOT $ENV{VCPKG_ROOT})
+  if(NOT DEFINED ${VCPKG_ROOT})
+    set(VCTOOL_FILE $ENV{VCTOOL})
+    get_filename_component(VCTOOL_DIR ${VCTOOL_FILE} DIRECTORY)
+    get_filename_component(VCPKG_ROOT ${VCTOOL_DIR}/../../ REALPATH)
+  endif()
+endif()
+
+if( NOT DEFINED ${VCPKG_TARGET_TRIPLET})
+  message(STATUS "Pulling VCPKG_TARGET_TRIPLET from Environment to build")
+  set(VCPKG_TARGET_TRIPLET $ENV{VCPKG_TARGET_TRIPLET})
+  if(NOT DEFINED ${VCPKG_TARGET_TRIPLET})
+    set(VCPKG_TARGET_TRIPLET "x64-windows")
+  endif()
+endif()
+
 add_library(${PROJECT_NAME} SHARED) 
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 # set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/bin)
+
+
+set(EASYLOGGINGPP_ROOT ${VCPKG_ROOT}/installed/${VCPKG_TARGET_TRIPLET}/include)
+add_compile_definitions(ELPP_THREAD_SAFE ELPP_FORCE_USE_STD_THREAD)
+add_compile_definitions(NOMINMAX)
+
+file(GLOB EASYLOGGING ${EASYLOGGINGPP_ROOT}/*.cc)
+message(STATUS "LOGGIN DIR: ${EASYLOGGINGPP_ROOT}, VCPkG: ${VCPKG_ROOT}")
 
 message(STATUS "ATTEMPT FIND CORRADE: ${BASE_NODE_DIR}/corradejs/corrade/share/cmake/Corrade")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${BASE_NODE_DIR}/corradejs/corrade/share/cmake/Corrade)
@@ -122,6 +148,7 @@ if(NOT imgui_POPULATED)
   message(STATUS "Fetching imgui ${imgui_VERSION}")
 
   FetchContent_Populate(imgui)
+  # add_subdirectory(${imgui_SOURCE_DIR} ${imgui_BINARY_DIR})
 
   set(IMGUI_INCLUDE_DIR 
     ${imgui_SOURCE_DIR})
@@ -177,7 +204,8 @@ target_sources(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     ${CMAKE_JS_LIB} 
-    ${CORRADE_LIBRARIES}
+    ${MAGNUM_LIBRARIES}
+    ${MAGNUM_INTEGRATION_LIBRARIES}
 ) 
 
 # Include Node-API wrappers
@@ -196,6 +224,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ../external/cr
     ${CORRADE_INCLUDE_DIR}
     ${MAGNUM_INCLUDE_DIR}
+    ${MAGNUMINTEGRATION_INCLUDE_DIR}
     ${NODE_ADDON_API_DIR})
 
 # define NPI_VERSION
