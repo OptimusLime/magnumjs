@@ -1,0 +1,33 @@
+{
+  "name": "magnumjs",
+  "version": "1.0.0",
+  "description": "CMake-js wrapper to build Magnum C++ graphics lib",
+  "main": "lib/index.js",
+  "scripts": {
+    "install": "cross-var npm run compile && cross-var npm run cinstall",
+    "cinstall": "cmake-js build --CDCMAKE_INSTALL_PREFIX=../magnum --target=install",
+    "compile": "cross-var cmake-js compile -CG 'Visual Studio 16 2019' --CDCMAKE_TOOLCHAIN_FILE=$VCTOOL --CDVCPKG_TARGET_TRIPLET=x64-windows --CDCMAKE_INSTALL_PREFIX=../magnum",
+    "cmake": "cross-var mkdir -p build && cd build && cross-var cmake -G 'Visual Studio 16 2019' -DCMAKE_TOOLCHAIN_FILE=$VCTOOL -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_INSTALL_PREFIX=./bin ..",
+    "build": "cross-var cmake-js build -CG 'Visual Studio 16 2019' --CDCMAKE_TOOLCHAIN_FILE=$VCTOOL --CDVCPKG_ROOT=$VCPKG_DIR --CDCMAKE_INSTALL_PREFIX=./bin --CDVCPKG_TARGET_TRIPLET=x64-windows",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bindings": "~1.2.1",
+    "corradejs": "github:OptimusLime/corradejs",
+    "cross-var": "^1.1.0",
+    "node-addon-api": "^3.2.1"
+  },
+  "devDependencies": {
+    "cmake-js": "^6.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OptimusLime/magnumjs.git"
+  },
+  "author": "Paul Szerlip",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OptimusLime/magnumjs/issues"
+  },
+  "homepage": "https://github.com/OptimusLime/magnumjs#readme"
+}
