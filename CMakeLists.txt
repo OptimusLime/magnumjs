@@ -65,6 +65,7 @@ set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${BASE_NODE_DIR}/corradejs/corrade)
 find_package(Corrade REQUIRED)
 
 message(STATUS "Corrade Incl: ${CORRADE_INCLUDE_DIR}")
+set(Corrade_DIR  ${BASE_NODE_DIR}/corradejs/corrade/share/cmake/Corrade)
 set(CORRADE_INCLUDE_DIR ${BASE_NODE_DIR}/corradejs/corrade/include ${CORRADE_INCLUDE_DIR})
 
 # add our dependencies
