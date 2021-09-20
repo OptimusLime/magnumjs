@@ -58,7 +58,7 @@ add_library(${PROJECT_NAME} SHARED)
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 # set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/bin)
 
-message(STATUS "ATTEMPT FIND CORRADE: ${CMAKE_SOURCE_DIR}/node_modules/corradejs/corrade/share/cmake/Corrade")
+message(STATUS "ATTEMPT FIND CORRADE: ${BASE_NODE_DIR}/corradejs/corrade/share/cmake/Corrade")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${BASE_NODE_DIR}/corradejs/corrade/share/cmake/Corrade)
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${BASE_NODE_DIR}/corradejs/corrade)
 # set(_CORRADE_MODULE_DIR ${BASE_NODE_DIR}/corradejs/corrade/share)
