@@ -222,6 +222,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ./
     src
     ${EASYLOGGINGPP_ROOT}
+    ${IMGUI_INCLUDE_DIR}
     ${CORRADE_INCLUDE_DIR}
     ${MAGNUM_INCLUDE_DIR}
     ${MAGNUMINTEGRATION_INCLUDE_DIR}
@@ -229,3 +230,12 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 # define NPI_VERSION
 add_definitions(-DNAPI_VERSION=7)
+
+file(GLOB MAGNUM_MODS ${magnum_SOURCE_DIR}/modules/*.cmake)
+# message("Magnum Mods to Copy: ${MAGNUM_MODS}")
+install(FILES ${MAGNUM_MODS} DESTINATION ${CMAKE_BINARY_DIR}/share/cmake/Magnum/)
+
+file(GLOB MAGNUMINTEGRATION_MODS ${magnum_integration_SOURCE_DIR}/modules/*.cmake)
+# message("Magnum Int Mods to Copy: ${MAGNUMINTEGRATION_MODS}")
+# message(" Copy to: ${INSTALL_CMAKE_DIR}")
+install(FILES ${MAGNUMINTEGRATION_MODS} DESTINATION ${CMAKE_BINARY_DIR}/share/cmake/MagnumIntegration/)

@@ -1,14 +1,14 @@
 {
   "name": "magnumcppjs",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "CMake-js wrapper to build Magnum C++ graphics lib",
   "main": "lib/index.js",
   "scripts": {
     "primeinstall": "cross-var npm run compile && cross-var npm run cinstall",
-    "cinstall": "cmake-js build --CDCMAKE_INSTALL_PREFIX=../magnum --target=install",
-    "compile": "cross-var cmake-js compile -CG 'Visual Studio 16 2019' --CDCMAKE_TOOLCHAIN_FILE=$VCTOOL --CDVCPKG_TARGET_TRIPLET=x64-windows --CDCMAKE_INSTALL_PREFIX=../magnum",
-    "cmake": "cross-var mkdir -p build && cd build && cross-var cmake -G 'Visual Studio 16 2019' -DCMAKE_TOOLCHAIN_FILE=$VCTOOL -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_INSTALL_PREFIX=./bin ..",
-    "build": "cross-var cmake-js build -CG 'Visual Studio 16 2019' --CDCMAKE_TOOLCHAIN_FILE=$VCTOOL --CDVCPKG_ROOT=$VCPKG_DIR --CDCMAKE_INSTALL_PREFIX=./bin --CDVCPKG_TARGET_TRIPLET=x64-windows",
+    "cinstall": "cmake-js build --CDCMAKE_INSTALL_PREFIX=../mprime --target=install",
+    "compile": "cross-var cmake-js compile -CG 'Visual Studio 16 2019' --CDCMAKE_TOOLCHAIN_FILE=$VCTOOL --CDVCPKG_TARGET_TRIPLET=x64-windows --CDCMAKE_INSTALL_PREFIX=../mprime",
+    "cmake": "cross-var mkdir -p build && cd build && cross-var cmake -G 'Visual Studio 16 2019' -DCMAKE_TOOLCHAIN_FILE=$VCTOOL -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_INSTALL_PREFIX=../mprime ..",
+    "build": "cross-var cmake-js build -CG 'Visual Studio 16 2019' --CDCMAKE_TOOLCHAIN_FILE=$VCTOOL --CDVCPKG_ROOT=$VCPKG_DIR --CDCMAKE_INSTALL_PREFIX=../mprime --CDVCPKG_TARGET_TRIPLET=x64-windows",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
