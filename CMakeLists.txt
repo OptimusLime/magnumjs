@@ -221,7 +221,7 @@ string(REGEX REPLACE "[\r\n\"]" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
 target_include_directories(${PROJECT_NAME} PRIVATE 
     ./
     src
-    ../external/cr
+    ${EASYLOGGINGPP_ROOT}
     ${CORRADE_INCLUDE_DIR}
     ${MAGNUM_INCLUDE_DIR}
     ${MAGNUMINTEGRATION_INCLUDE_DIR}
