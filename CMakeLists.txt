@@ -29,9 +29,9 @@ set(INSTALL_INCLUDE_DIR include CACHE PATH
   "Installation directory for header files")
 
 if(WIN32 AND NOT CYGWIN)
-  set(DEF_INSTALL_CMAKE_DIR cmake)
+  set(DEF_INSTALL_CMAKE_DIR share/cmake)
 else()
-  set(DEF_INSTALL_CMAKE_DIR lib/cmake/MinMagApi)
+  set(DEF_INSTALL_CMAKE_DIR lib/share/cmake/MinMagApi)
 endif()
 set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH
   "Installation directory for CMake files")
@@ -84,15 +84,15 @@ add_compile_definitions(NOMINMAX)
 file(GLOB EASYLOGGING ${EASYLOGGINGPP_ROOT}/*.cc)
 message(STATUS "LOGGIN DIR: ${EASYLOGGINGPP_ROOT}, VCPkG: ${VCPKG_ROOT}")
 
-message(STATUS "ATTEMPT FIND CORRADE: ${BASE_NODE_DIR}/corradejs/corrade/share/cmake/Corrade")
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${BASE_NODE_DIR}/corradejs/corrade/share/cmake/Corrade)
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${BASE_NODE_DIR}/corradejs/corrade)
-# set(_CORRADE_MODULE_DIR ${BASE_NODE_DIR}/corradejs/corrade/share)
+message(STATUS "ATTEMPT FIND CORRADE: ${BASE_NODE_DIR}/corradejs/mprime/share/cmake/Corrade")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${BASE_NODE_DIR}/corradejs/mprime/share/cmake/Corrade)
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${BASE_NODE_DIR}/corradejs/mprime)
+# set(_CORRADE_MODULE_DIR ${BASE_NODE_DIR}/corradejs/mprime/share)
 find_package(Corrade REQUIRED)
 
 message(STATUS "Corrade Incl: ${CORRADE_INCLUDE_DIR}")
-set(Corrade_DIR  ${BASE_NODE_DIR}/corradejs/corrade/share/cmake/Corrade)
-set(CORRADE_INCLUDE_DIR ${BASE_NODE_DIR}/corradejs/corrade/include ${CORRADE_INCLUDE_DIR})
+set(Corrade_DIR  ${BASE_NODE_DIR}/corradejs/mprime/share/cmake/Corrade)
+set(CORRADE_INCLUDE_DIR ${BASE_NODE_DIR}/corradejs/mprime/include ${CORRADE_INCLUDE_DIR})
 
 # add our dependencies
 FetchContent_Declare(
@@ -231,11 +231,12 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 # define NPI_VERSION
 add_definitions(-DNAPI_VERSION=7)
 
+message(" Copy to: install cmake: ${INSTALL_CMAKE_DIR}")
 file(GLOB MAGNUM_MODS ${magnum_SOURCE_DIR}/modules/*.cmake)
 # message("Magnum Mods to Copy: ${MAGNUM_MODS}")
-install(FILES ${MAGNUM_MODS} DESTINATION ${CMAKE_BINARY_DIR}/share/cmake/Magnum/)
+install(FILES ${MAGNUM_MODS} DESTINATION ${INSTALL_CMAKE_DIR}/Magnum/)
 
 file(GLOB MAGNUMINTEGRATION_MODS ${magnum_integration_SOURCE_DIR}/modules/*.cmake)
 # message("Magnum Int Mods to Copy: ${MAGNUMINTEGRATION_MODS}")
-# message(" Copy to: ${INSTALL_CMAKE_DIR}")
-install(FILES ${MAGNUMINTEGRATION_MODS} DESTINATION ${CMAKE_BINARY_DIR}/share/cmake/MagnumIntegration/)
+# message(" Copy to Bin Dir: ${CMAKE_BINARY_DIR}/share/cmake/MagnumIntegration/")
+install(FILES ${MAGNUMINTEGRATION_MODS} DESTINATION ${INSTALL_CMAKE_DIR}/MagnumIntegration/)

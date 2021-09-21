@@ -1,6 +1,6 @@
 {
   "name": "magnumcppjs",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "CMake-js wrapper to build Magnum C++ graphics lib",
   "main": "lib/index.js",
   "scripts": {
@@ -13,12 +13,13 @@
   },
   "dependencies": {
     "bindings": "~1.2.1",
+    "corradejs": "*",
     "cross-var": "^1.1.0",
-    "node-addon-api": "^3.2.1",
-    "corradejs": "*"
+    "node-addon-api": "^3.2.1"
   },
   "devDependencies": {
-    "cmake-js": "^6.2.1"
+    "cmake-js": "^6.2.1",
+    "dag_installer": "^0.0.3"
   },
   "repository": {
     "type": "git",
