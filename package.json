@@ -1,6 +1,6 @@
 {
   "name": "magnumcppjs",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "CMake-js wrapper to build Magnum C++ graphics lib",
   "main": "lib/index.js",
   "scripts": {
