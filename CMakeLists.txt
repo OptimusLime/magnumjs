@@ -54,7 +54,7 @@ if(${CMAKE_VERSION} VERSION_LESS 3.14)
     include(cmake/add_FetchContent_MakeAvailable.cmake)
 endif()
 
-if( NOT DEFINED ${VCPKG_ROOT})
+if( MSVC AND NOT DEFINED ${VCPKG_ROOT})
   message(STATUS "Pulling VCPKG_ROOT from Environment to build")
   set(VCPKG_ROOT $ENV{VCPKG_ROOT})
   if(NOT DEFINED ${VCPKG_ROOT})
@@ -64,7 +64,7 @@ if( NOT DEFINED ${VCPKG_ROOT})
   endif()
 endif()
 
-if( NOT DEFINED ${VCPKG_TARGET_TRIPLET})
+if(MSVC AND NOT DEFINED ${VCPKG_TARGET_TRIPLET})
   message(STATUS "Pulling VCPKG_TARGET_TRIPLET from Environment to build")
   set(VCPKG_TARGET_TRIPLET $ENV{VCPKG_TARGET_TRIPLET})
   if(NOT DEFINED ${VCPKG_TARGET_TRIPLET})
@@ -77,7 +77,20 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 # set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/bin)
 
 
-set(EASYLOGGINGPP_ROOT ${VCPKG_ROOT}/installed/${VCPKG_TARGET_TRIPLET}/include)
+if(NOT MSVC)
+  FetchContent_Declare(
+    easyloggingpp
+    GIT_REPOSITORY https://github.com/amrayn/easyloggingpp
+    GIT_TAG 8489989bb26c6371df103f6cbced3fbee1bc3c2f
+  )
+  FetchContent_MakeAvailable(easyloggingpp)
+  message(STATUS "Easy Logging Dir: ${easyloggingpp_SOURCE_DIR}")
+  message(STATUS "Easy Logging Dir: ${easyloggingpp_BINARY_DIR}")
+  set(EASYLOGGINGPP_ROOT ${easyloggingpp_SOURCE_DIR}/src)
+else()
+  set(EASYLOGGINGPP_ROOT ${VCPKG_ROOT}/installed/${VCPKG_TARGET_TRIPLET}/include)
+endif()
+
 add_compile_definitions(ELPP_THREAD_SAFE ELPP_FORCE_USE_STD_THREAD)
 add_compile_definitions(NOMINMAX)
 
@@ -182,6 +195,8 @@ if(NOT magnum_integration_POPULATED)
         )
 
 endif()
+
+
 
 target_compile_definitions(
         ${PROJECT_NAME}

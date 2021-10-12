@@ -1,5 +1,5 @@
-#pragma once
-#define NOMINMAX
+// #pragma once
+// #define NOMINMAX
 
 #include <napi.h>
 #include "Magnum/ImGuiIntegration/Context.h"
