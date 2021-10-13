@@ -28,11 +28,11 @@ set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
 set(INSTALL_INCLUDE_DIR include CACHE PATH
   "Installation directory for header files")
 
-if(WIN32 AND NOT CYGWIN)
+# if(WIN32 AND NOT CYGWIN)
   set(DEF_INSTALL_CMAKE_DIR share/cmake)
-else()
-  set(DEF_INSTALL_CMAKE_DIR lib/share/cmake/MinMagApi)
-endif()
+# else()
+  # set(DEF_INSTALL_CMAKE_DIR share/cmake)
+# endif()
 set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH
   "Installation directory for CMake files")
 
